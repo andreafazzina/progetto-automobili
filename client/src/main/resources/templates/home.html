@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Home - Automobili</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="topbar">
+        <span class="brand">Automobili</span>
+        <span><span th:text="${username}">utente</span> · <a href="/logout">Esci</a></span>
+    </div>
+
+    <div class="container">
+        <h1>Marche disponibili</h1>
+        <table>
+            <thead>
+                <tr><th>Marca</th><th>Auto disponibili</th><th></th></tr>
+            </thead>
+            <tbody>
+                <tr th:each="brand : ${brands}">
+                    <td th:text="${brand.make}">Marca</td>
+                    <td th:text="${brand.availableCars}">0</td>
+                    <td><a th:href="@{/catalog/{make}(make=${brand.make})}">Vedi catalogo &rarr;</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

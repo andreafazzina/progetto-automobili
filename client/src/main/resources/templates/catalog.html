@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="'Catalogo ' + ${catalog.make}">Catalogo</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="topbar">
+        <span class="brand"><a href="/" style="color:#fff;">Automobili</a></span>
+        <span><a href="/logout">Esci</a></span>
+    </div>
+
+    <div class="container">
+        <div class="nav-actions">
+            <a href="javascript:history.back()" class="btn btn-ghost">&larr; Indietro</a>
+            <a href="/" class="btn btn-ghost">&#8962; Home</a>
+        </div>
+
+        <h1>
+            <span th:text="${catalog.make}">Marca</span>
+            <span class="muted">· <span th:text="${catalog.totalCars}">0</span> risultati</span>
+        </h1>
+
+        <!-- Form di filtri e ordinamento -->
+        <form th:action="@{/catalog/{make}(make=${catalog.make})}" method="get" class="filters card">
+            <div class="filter-grid">
+                <div>
+                    <label>Carrozzeria</label>
+                    <select name="bodyType">
+                        <option value="">Tutte</option>
+                        <option th:each="b : ${bodyTypes}" th:value="${b}" th:text="${b}"
+                                th:selected="${b == query.bodyType}"></option>
+                    </select>
+                </div>
+                <div>
+                    <label>Carburante</label>
+                    <select name="fuelType">
+                        <option value="">Tutti</option>
+                        <option th:each="f : ${fuelTypes}" th:value="${f}" th:text="${f}"
+                                th:selected="${f == query.fuelType}"></option>
+                    </select>
+                </div>
+                <div>
+                    <label>Anno da</label>
+                    <input type="number" name="yearFrom" th:value="${query.yearFrom}" placeholder="2000">
+                </div>
+                <div>
+                    <label>Anno a</label>
+                    <input type="number" name="yearTo" th:value="${query.yearTo}" placeholder="2024">
+                </div>
+                <div>
+                    <label>Prezzo min</label>
+                    <input type="number" name="priceFrom" th:value="${query.priceFrom}" placeholder="0">
+                </div>
+                <div>
+                    <label>Prezzo max</label>
+                    <input type="number" name="priceTo" th:value="${query.priceTo}" placeholder="100000">
+                </div>
+                <div>
+                    <label>Km max</label>
+                    <input type="number" name="mileageMax" th:value="${query.mileageMax}" placeholder="200000">
+                </div>
+                <div>
+                    <label>Ordina per</label>
+                    <select name="sortBy">
+                        <option value="">Predefinito</option>
+                        <option value="price"   th:selected="${query.sortBy == 'price'}">Prezzo</option>
+                        <option value="year"    th:selected="${query.sortBy == 'year'}">Anno</option>
+                        <option value="mileage" th:selected="${query.sortBy == 'mileage'}">Km</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Verso</label>
+                    <select name="sortDir">
+                        <option value="asc"  th:selected="${query.sortDir == 'asc'}">Crescente</option>
+                        <option value="desc" th:selected="${query.sortDir == 'desc'}">Decrescente</option>
+                    </select>
+                </div>
+            </div>
+            <div class="filter-actions">
+                <button type="submit">Applica</button>
+                <a th:href="@{/catalog/{make}(make=${catalog.make})}" class="btn btn-ghost">Azzera</a>
+            </div>
+        </form>
+
+        <!-- Tabella risultati -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Modello</th><th>Anno</th><th>Carburante</th><th>Cambio</th>
+                    <th>Km</th><th>Carrozzeria</th><th>Prezzo</th><th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="car : ${catalog.cars}">
+                    <td th:text="${car.model}">Modello</td>
+                    <td th:text="${car.year}">2020</td>
+                    <td th:text="${car.fuelType}">Benzina</td>
+                    <td th:text="${car.transmission}">Manuale</td>
+                    <td th:text="${car.mileage} + ' km'">0</td>
+                    <td th:text="${car.bodyType}">SUV</td>
+                    <td class="price" th:text="${car.sellingPrice} + ' €'">0 €</td>
+                    <td><a th:href="@{/cars/{id}(id=${car.id})}">Dettaglio &rarr;</a></td>
+                </tr>
+                <tr th:if="${catalog.cars.isEmpty()}">
+                    <td colspan="8" class="muted" style="text-align:center;">Nessun risultato con questi filtri.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Paginazione che CONSERVA i filtri -->
+        <div class="pagination" th:if="${catalog.totalPages > 1}">
+            <a th:if="${catalog.hasPrevious}"
+               th:href="@{/catalog/{make}(make=${catalog.make}, page=${catalog.page - 1},
+                         bodyType=${query.bodyType}, fuelType=${query.fuelType},
+                         yearFrom=${query.yearFrom}, yearTo=${query.yearTo},
+                         priceFrom=${query.priceFrom}, priceTo=${query.priceTo},
+                         mileageMax=${query.mileageMax},
+                         sortBy=${query.sortBy}, sortDir=${query.sortDir})}"
+               class="btn">&larr; Precedente</a>
+            <span th:unless="${catalog.hasPrevious}" class="btn disabled">&larr; Precedente</span>
+
+            <span class="page-info">Pagina <span th:text="${catalog.page + 1}">1</span>
+                di <span th:text="${catalog.totalPages}">1</span></span>
+
+            <a th:if="${catalog.hasNext}"
+               th:href="@{/catalog/{make}(make=${catalog.make}, page=${catalog.page + 1},
+                         bodyType=${query.bodyType}, fuelType=${query.fuelType},
+                         yearFrom=${query.yearFrom}, yearTo=${query.yearTo},
+                         priceFrom=${query.priceFrom}, priceTo=${query.priceTo},
+                         mileageMax=${query.mileageMax},
+                         sortBy=${query.sortBy}, sortDir=${query.sortDir})}"
+               class="btn">Successiva &rarr;</a>
+            <span th:unless="${catalog.hasNext}" class="btn disabled">Successiva &rarr;</span>
+        </div>
+    </div>
+</body>
+</html>

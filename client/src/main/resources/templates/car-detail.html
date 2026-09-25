@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="'Dettaglio ' + ${car.model}">Dettaglio auto</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+    <div class="topbar">
+        <span class="brand"><a href="/" style="color:#fff;">Automobili</a></span>
+        <span><a href="/logout">Esci</a></span>
+    </div>
+
+    <div class="container">
+        <div class="nav-actions">
+            <a href="javascript:history.back()" class="btn btn-ghost">&larr; Indietro</a>
+            <a href="/" class="btn btn-ghost">&#8962; Home</a>
+        </div>
+
+        <div class="card">
+            <h1 th:text="${car.make} + ' ' + ${car.model}">Auto</h1>
+            <table class="detail-table">
+                <tr><th>Anno</th><td th:text="${car.year}">-</td></tr>
+                <tr><th>Carburante</th><td th:text="${car.fuelType}">-</td></tr>
+                <tr><th>Cambio</th><td th:text="${car.transmission}">-</td></tr>
+                <tr><th>Cilindrata (L)</th><td th:text="${car.engineSize}">-</td></tr>
+                <tr><th>Chilometraggio</th><td th:text="${car.mileage} + ' km'">-</td></tr>
+                <tr><th>Potenza (CV)</th><td th:text="${car.horsepower}">-</td></tr>
+                <tr><th>Coppia (Nm)</th><td th:text="${car.torque}">-</td></tr>
+                <tr><th>Proprietari</th><td th:text="${car.owners}">-</td></tr>
+                <tr><th>Incidenti</th><td th:text="${car.accidentHistory > 0} ? 'Sì' : 'No'">-</td></tr>
+                <tr><th>Storico tagliandi</th><td th:text="${car.serviceHistory}">-</td></tr>
+                <tr><th>Colore</th><td th:text="${car.color}">-</td></tr>
+                <tr><th>Carrozzeria</th><td th:text="${car.bodyType}">-</td></tr>
+                <tr><th>Trazione</th><td th:text="${car.drivetrain}">-</td></tr>
+                <tr><th>Efficienza</th><td th:text="${car.fuelEfficiency}">-</td></tr>
+                <tr><th>Località</th><td th:text="${car.location}">-</td></tr>
+                <tr><th>Prezzo</th><td class="price" th:text="${car.sellingPrice} + ' €'">-</td></tr>
+            </table>
+        </div>
+
+        <h2>Auto simili di altre marche</h2>
+        <div th:each="panel : ${panels}" class="card">
+            <h3 th:text="${panel.title}">Pannello</h3>
+            <p th:if="${panel.cars.isEmpty()}" class="muted">Nessuna auto simile trovata.</p>
+            <table th:unless="${panel.cars.isEmpty()}">
+                <thead>
+                    <tr><th>Marca</th><th>Modello</th><th>Anno</th><th>Km</th><th>Prezzo</th><th></th></tr>
+                </thead>
+                <tbody>
+                    <tr th:each="car : ${panel.cars}">
+                        <td th:text="${car.make}">-</td>
+                        <td th:text="${car.model}">-</td>
+                        <td th:text="${car.year}">-</td>
+                        <td th:text="${car.mileage} + ' km'">-</td>
+                        <td class="price" th:text="${car.sellingPrice} + ' €'">-</td>
+                        <td><a th:href="@{/cars/{id}(id=${car.id})}">Dettaglio &rarr;</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
