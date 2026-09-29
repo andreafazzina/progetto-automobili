@@ -17,7 +17,7 @@ import jakarta.servlet.http.HttpServletResponse;
 /**
  * Reference Monitor: intercetta TUTTE le richieste HTTP prima che
  * raggiungano il controller (il ProtectionObject). 
- * Verifica il token JWT e, se valido, deposita l'identità nel CurrentUserContext (il Subject). 
+ * Verifica il token JWT e, se valido, deposita l'identità nel CurrentUserContext. 
  * Le richieste senza token valido proseguono come "non autenticate": saranno i service a negare l'accesso dove serve.
  *
  * Il login è pubblico (nessun token richiesto) e viene lasciato passare.

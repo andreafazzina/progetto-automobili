@@ -63,7 +63,7 @@ public class BatchService {
                 resp.setErrorMessage("Operazione non consentita per il ruolo " + role);
                 return resp;
             }
-            PayloadDTO payload = runRequest(item);
+            PayloadDTO payload = runRequest(item);      // esecuzione effettiva della richiesta
             resp.setStatus(ResponseStatus.OK);
             resp.setPayload(payload);
 

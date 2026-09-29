@@ -3,10 +3,9 @@ package com.progetto.server.security;
 import com.progetto.shared.dto.auth.Role;
 
 /**
- * Contenitore del "soggetto" (Subject del Reference Monitor) autenticato
- * per la richiesta HTTP in corso. Il filtro JWT vi deposita username e
- * ruolo dopo aver verificato il token; i service li leggono per decidere
- * le autorizzazioni.
+ * Contenitore del "soggetto" autenticato per la richiesta HTTP in corso. 
+ * Il filtro JWT vi deposita username e ruolo dopo aver verificato il token; 
+ * i service li leggono per decidere le autorizzazioni.
  *
  * Usa ThreadLocal: ogni richiesta HTTP gira su un thread separato, quindi
  * ogni richiesta ha il proprio contesto isolato dalle altre (fondamentale
