@@ -12,7 +12,7 @@ import com.progetto.shared.dto.analysis.DataPointDTO;
 /**
  * Wrapper del risultato di una singola richiesta del batch.
  * Solo uno dei due campi è valorizzato, in base al RequestType:
- *  - richieste SIMILAR_*    -> cars
+ *  - richieste di similarità    -> cars
  *  - richieste di analisi   -> dataPoints
  * L'altro campo resta null.
  */

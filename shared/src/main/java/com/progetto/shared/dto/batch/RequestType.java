@@ -8,7 +8,7 @@ package com.progetto.shared.dto.batch;
  */
 public enum RequestType {
 
-    // --- Richieste di similarità (accessibili a USER e ANALYST) ---
+    // --- Richieste di similarità (accessibili a USER) ---
     // Producono List<CarSummaryDTO> → payload.cars
     SIMILAR_BY_PRICE,      // auto simili per fascia di prezzo, altra marca
     SIMILAR_BY_ENGINE,     // auto simili per motorizzazione (cilindrata/potenza)

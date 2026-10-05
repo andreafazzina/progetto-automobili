@@ -41,6 +41,8 @@ public class AnalysisController {
         if (!session.isAuthenticated()) return "redirect:/login";
         if (!session.isAnalyst()) return "redirect:/";
 
+        model.addAttribute("username", session.getUsername());
+
         // Dati per i menu a tendina
         model.addAttribute("types", AnalysisType.values());
         model.addAttribute("selectedType", type);

@@ -52,6 +52,7 @@ public class CatalogController {
                 yearFrom, yearTo, priceFrom, priceTo, mileageMax,
                 sortBy, sortDir, page);
 
+        model.addAttribute("username", session.getUsername());
         model.addAttribute("catalog", autoService.getCatalog(query));
         model.addAttribute("query", query);   // per ripopolare il form e i link
 

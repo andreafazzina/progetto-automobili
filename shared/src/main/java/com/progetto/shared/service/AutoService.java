@@ -8,7 +8,7 @@ import com.progetto.shared.dto.analysis.*;
 import com.progetto.shared.dto.batch.*;
 
 /**
- * interfaccia Remote Facade
+ * interfaccia Remote Facade e Remote Proxy
  * 
  * Definisce le operazioni coarse-grained esposte dal server
  * e usate dal client. Vive nel modulo 'shared' così che

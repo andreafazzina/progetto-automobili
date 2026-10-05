@@ -50,7 +50,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                         DecodedJWT decoded = jwtService.verify(token);   // lancia se non valido
                         String username = jwtService.getUsername(decoded);
                         Role role = jwtService.getRole(decoded);
-                        CurrentUserContext.set(username, role);          // popola il Subject
+                        CurrentUserContext.set(username, role);         
                     } catch (Exception ex) {
                         // Token presente ma non valido/scaduto: NON autenticato.
                         // Non blocchiamo qui; il contesto resta vuoto e i

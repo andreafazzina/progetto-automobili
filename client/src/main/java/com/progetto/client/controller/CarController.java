@@ -35,6 +35,7 @@ public class CarController {
         if (session.isAnalyst()) return "redirect:/analysis";
 
         // 1. La scheda dell'auto
+        model.addAttribute("username", session.getUsername());
         model.addAttribute("car", autoService.getCarDetail(id));
 
         // 2. Auto simili: UNA sola chiamata batch con quattro richieste
