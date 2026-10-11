@@ -1,0 +1,22 @@
+# ===== Identità dell'applicazione =====
+spring.application.name=server
+
+# ===== Connessione a PostgreSQL =====
+spring.datasource.url=jdbc:postgresql://localhost:5432/automobili
+spring.datasource.username=postgres
+spring.datasource.password=INSERISCI_LA_TUA_PASSWORD
+spring.datasource.driver-class-name=org.postgresql.Driver
+
+# ===== Comportamento di Hibernate/JPA =====
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+
+# ===== JWT =====
+jwt.secret=INSERISCI_IL_TUO_JWT_SECRET
+jwt.issuer=progetto-automobili
+jwt.expiration-ms=3600000
+
+# ===== Hash delle password =====
+app.users.seller.hash=INSERISCI_HASH_SELLER
+app.users.analyst.hash=INSERISCI_HASH_ANALYST
